@@ -5,7 +5,7 @@ const articleRouter = require('./routes/article');
 const methodOverride = require('method-override')
 const app = express ();
 
-mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true }).catch(err=>{
+mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/crud-blog", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true }).catch(err=>{
   console.log(err)
 })
 
@@ -13,7 +13,7 @@ app.set("view engine", "ejs");
 
 //we can access all parameters from article Form inside our article route by accessing req.body.title
 app.use(express.urlencoded({extended: false}))
-
+app.use(express.static(__dirname+"/public"))
 app.use(methodOverride('_method'))
 
 
